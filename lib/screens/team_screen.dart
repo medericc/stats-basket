@@ -30,7 +30,7 @@ class TeamScreen extends StatelessWidget {
                 trailing: IconButton(
                   icon: Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    _showDeleteConfirmationDialog(context, team, index, teamBox);
+                    _showDeleteTeamConfirmationDialog(context, team, index, teamBox);
                   },
                 ),
                 children: [
@@ -39,21 +39,39 @@ class TeamScreen extends StatelessWidget {
                       title: Text(player.name),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: matches.map((match) {
+                        children: matches.asMap().entries.map((entry) {
+                          int matchIndex = entry.key;
+                          Match match = entry.value;
                           PlayerStats stats = match.playerStats.firstWhere(
                             (stats) => stats.playerName == player.name,
                             orElse: () => PlayerStats(playerName: player.name),
                           );
+
+                          var matchKey = matchBox.keyAt(matchIndex);
+
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text(
-                              'Match ${match.date.toLocal().toString().split(' ')[0]}: '
-                              '${stats.points} points, ${stats.rebounds} rebounds, '
-                              '${stats.assists} assists, ${stats.steals} steals, '
-                              '${stats.blocks} blocks, ${stats.turnovers} turnovers, '
-                              'FT: ${stats.ftMade}/${stats.ftMissed + stats.ftMade}, '
-                              '2PT: ${stats.twoPtMade}/${stats.twoPtMissed + stats.twoPtMade}, '
-                              '3PT: ${stats.threePtMade}/${stats.threePtMissed + stats.threePtMade}',
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    'Match ${match.date.toLocal().toString().split(' ')[0]}: '
+                                    '${stats.points} points, ${stats.rebounds} rebounds, '
+                                    '${stats.assists} assists, ${stats.steals} steals, '
+                                    '${stats.blocks} blocks, ${stats.turnovers} turnovers, '
+                                    'FT: ${stats.ftMade}/${stats.ftMissed + stats.ftMade}, '
+                                    '2PT: ${stats.twoPtMade}/${stats.twoPtMissed + stats.twoPtMade}, '
+                                    '3PT: ${stats.threePtMade}/${stats.threePtMissed + stats.threePtMade}',
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () {
+                                    _showDeleteMatchConfirmationDialog(context, matchKey, matchBox);
+                                  },
+                                ),
+                              ],
                             ),
                           );
                         }).toList(),
@@ -69,7 +87,7 @@ class TeamScreen extends StatelessWidget {
     );
   }
 
-  void _showDeleteConfirmationDialog(BuildContext context, Team team, int index, Box<Team> teamBox) {
+  void _showDeleteTeamConfirmationDialog(BuildContext context, Team team, int index, Box<Team> teamBox) {
     showDialog(
       context: context,
       builder: (context) {
@@ -86,6 +104,33 @@ class TeamScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 teamBox.deleteAt(index);
+                Navigator.of(context).pop();
+              },
+              child: Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDeleteMatchConfirmationDialog(BuildContext context, dynamic matchKey, Box<Match> matchBox) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Match'),
+          content: Text('Are you sure you want to delete this match?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                matchBox.delete(matchKey);
                 Navigator.of(context).pop();
               },
               child: Text('Delete', style: TextStyle(color: Colors.red)),
