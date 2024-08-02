@@ -18,7 +18,7 @@ class TeamAdapter extends TypeAdapter<Team> {
     };
     return Team(
       name: fields[0] as String,
-      players: (fields[1] as List).cast<dynamic>(),
+      players: (fields[1] as List).cast<Player>(),
     );
   }
 

@@ -51,8 +51,9 @@ class TeamScreen extends StatelessWidget {
                               '${stats.points} points, ${stats.rebounds} rebounds, '
                               '${stats.assists} assists, ${stats.steals} steals, '
                               '${stats.blocks} blocks, ${stats.turnovers} turnovers, '
-                              'FT: ${stats.ftMade}/${stats.ftMissed}, 2PT: ${stats.twoPtMade}/${stats.twoPtMissed}, '
-                              '3PT: ${stats.threePtMade}/${stats.threePtMissed}',
+                              'FT: ${stats.ftMade}/${stats.ftMissed + stats.ftMade}, '
+                              '2PT: ${stats.twoPtMade}/${stats.twoPtMissed + stats.twoPtMade}, '
+                              '3PT: ${stats.threePtMade}/${stats.threePtMissed + stats.threePtMade}',
                             ),
                           );
                         }).toList(),

@@ -160,9 +160,9 @@ class _MatchScreenState extends State<MatchScreen> {
                   Text('Contres: ${player.blocks}'),
                   Text('Turnovers: ${player.turnovers}'),
                   Text('Points: ${player.points}'),
-                  Text('1 pt: ${player.ftMade}/${player.ftMissed}'),
-                  Text('2 pts: ${player.twoPtMade}/${player.twoPtMissed}'),
-                  Text('3 pts: ${player.threePtMade}/${player.threePtMissed}'),
+                  Text('1 pt: ${player.ftMade}/${player.ftMissed + player.ftMade}'),
+                  Text('2 pts: ${player.twoPtMade}/${player.twoPtMissed + player.twoPtMade}'),
+                  Text('3 pts: ${player.threePtMade}/${player.threePtMissed + player.threePtMade}'),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
