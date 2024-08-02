@@ -7,6 +7,7 @@ import 'screens/home_screen.dart';
 import 'screens/team_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(PlayerAdapter());
   Hive.registerAdapter(TeamAdapter());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: MainScreen(),
     );
   }
 }

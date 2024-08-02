@@ -11,7 +11,7 @@ class CreateTeamScreen extends StatefulWidget {
 class _CreateTeamScreenState extends State<CreateTeamScreen> {
   final _formKey = GlobalKey<FormState>();
   final _teamNameController = TextEditingController();
-  final List<TextEditingController> _playerControllers = List.generate(5, (index) => TextEditingController());
+  final List<TextEditingController> _playerControllers = List.generate(12, (index) => TextEditingController());
 
   void _createTeam() {
     if (_formKey.currentState?.validate() ?? false) {

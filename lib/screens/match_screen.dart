@@ -69,6 +69,21 @@ class _MatchScreenState extends State<MatchScreen> {
     });
   }
 
+  void resetPlayerStats(Player player) {
+    player.rebounds = 0;
+    player.assists = 0;
+    player.steals = 0;
+    player.blocks = 0;
+    player.turnovers = 0;
+    player.points = 0;
+    player.ftMade = 0;
+    player.ftMissed = 0;
+    player.twoPtMade = 0;
+    player.twoPtMissed = 0;
+    player.threePtMade = 0;
+    player.threePtMissed = 0;
+  }
+
   void endMatch() {
     List<PlayerStats> playerStats = widget.team.players.map((player) {
       return PlayerStats(
@@ -90,6 +105,12 @@ class _MatchScreenState extends State<MatchScreen> {
 
     Match match = Match(date: matchDate, playerStats: playerStats);
     matchBox.add(match);
+
+    // Réinitialiser les statistiques des joueurs
+    widget.team.players.forEach(resetPlayerStats);
+
+    // Mettre à jour la boîte d'équipes
+    teamBox.put(widget.team.name, widget.team);
 
     Navigator.pop(context);
   }
